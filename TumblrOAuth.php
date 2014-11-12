@@ -16,6 +16,7 @@
 // REGISTER APP HERE: https://www.tumblr.com/oauth/apps
 
 
+
 class TumblrOAuth
 {
 
@@ -28,22 +29,62 @@ class TumblrOAuth
 
     public $http_info;
     public $useragent = 'TumblrOAuth';
+    
+    /**
+     * TumblrOAuth::requestTokenURL()
+     * 
+     * @return
+     */
+     
     function requestTokenURL()
     {
         return 'http://www.tumblr.com/oauth/request_token';
     }
+    
+    /**
+     * TumblrOAuth::authorizeURL()
+     * 
+     * @return
+     */
+     
     function authorizeURL()
     {
         return 'http://www.tumblr.com/oauth/authorize';
     }
+    
+    /**
+     * TumblrOAuth::accessTokenURL()
+     * 
+     * @return
+     */
+     
     function accessTokenURL()
     {
         return 'http://www.tumblr.com/oauth/access_token';
     }
+    
+    /**
+     * TumblrOAuth::authenticateURL()
+     * 
+     * @return
+     */
+     
+     
     function authenticateURL()
     {
         return 'https://www.tumblr.com/oauth/authorize';
     }
+    
+    /**
+     * TumblrOAuth::__construct()
+     * 
+     * @param mixed $consumer_key
+     * @param mixed $consumer_secret
+     * @param mixed $oauth_token
+     * @param mixed $oauth_token_secret
+     * @return
+     */
+     
     function __construct($consumer_key, $consumer_secret, $oauth_token = null, $oauth_token_secret = null)
     {
         $this->sha1_method = new OAuthSignatureMethod_HMAC_SHA1();
@@ -57,6 +98,14 @@ class TumblrOAuth
             $this->token = null;
         }
     }
+    
+    /**
+     * TumblrOAuth::getRequestToken()
+     * 
+     * @param mixed $oauth_callback
+     * @return
+     */
+     
     function getRequestToken($oauth_callback)
     {
         $parameters = array();
@@ -66,6 +115,16 @@ class TumblrOAuth
         $this->token = new OAuthConsumer($token['oauth_token'], $token['oauth_token_secret']);
         return $token;
     }
+    
+    /**
+     * TumblrOAuth::oAuthRequest()
+     * 
+     * @param mixed $url
+     * @param mixed $method
+     * @param mixed $parameters
+     * @return
+     */
+     
     function oAuthRequest($url, $method, $parameters)
     {
         if (strrpos($url, 'https://') !== 0 && strrpos($url, 'http://') !== 0)
@@ -82,6 +141,16 @@ class TumblrOAuth
                 return $this->http($request->get_normalized_http_url(), $method, $request->to_postdata());
         }
     }
+    
+    /**
+     * TumblrOAuth::http()
+     * 
+     * @param mixed $url
+     * @param mixed $method
+     * @param mixed $postfields
+     * @return
+     */
+     
     function http($url, $method, $postfields = null)
     {
         $this->http_info = array();
@@ -122,6 +191,15 @@ class TumblrOAuth
         curl_close($ci);
         return $response;
     }
+    
+    /**
+     * TumblrOAuth::getHeader()
+     * 
+     * @param mixed $ch
+     * @param mixed $header
+     * @return
+     */
+     
     function getHeader($ch, $header)
     {
         $i = strpos($header, ':');
@@ -133,6 +211,15 @@ class TumblrOAuth
         }
         return strlen($header);
     }
+    
+    /**
+     * TumblrOAuth::getAuthorizeURL()
+     * 
+     * @param mixed $token
+     * @param bool $sign_in_with_tumblr
+     * @return
+     */
+     
     function getAuthorizeURL($token, $sign_in_with_tumblr = true)
     {
         if (is_array($token))
@@ -149,6 +236,13 @@ class TumblrOAuth
     }
 
 
+    /**
+     * TumblrOAuth::getAccessToken()
+     * 
+     * @param mixed $oauth_verifier
+     * @return
+     */
+     
     function getAccessToken($oauth_verifier)
     {
         $parameters = array();
@@ -159,6 +253,14 @@ class TumblrOAuth
         return $token;
     }
 
+    /**
+     * TumblrOAuth::post()
+     * 
+     * @param mixed $url
+     * @param mixed $parameters
+     * @return
+     */
+     
     function post($url, $parameters = array())
     {
         $response = $this->oAuthRequest($url, 'POST', $parameters);
