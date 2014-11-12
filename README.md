@@ -24,7 +24,8 @@ header("Location: " . $url );
 require_once ('config.php');
 require_once ('OAuth.php');
 require_once ('TumblrOAuth.php');
-if(isset($_REQUEST['oauth_token']) && $_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
+if(isset($_REQUEST['oauth_token']) && 
+	$_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
 $_SESSION['oauth_status'] = 'oldtoken';
 	header('Location: ./install-app.php');
 }
