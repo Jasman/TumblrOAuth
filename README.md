@@ -34,7 +34,7 @@ The PHP Library to support OAuth for Tumblr's REST API.
 					header('Location: ./post-app.php');
 				}
 
- 3. post-app.php
+3. post-app.php
 
 
 				require_once ('OAuth.php');
